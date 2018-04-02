@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { priceDisplay } from '../utils';
 import ajax from './ajax';
@@ -8,9 +8,11 @@ import ajax from './ajax';
 const styles = StyleSheet.create({
   deal: {
     marginHorizontal: 12,
-    marginTop: 50,
-    borderColor: '#bbb',
-    borderWidth: 1,
+    marginTop: 24,
+  },
+  backLink: {
+    marginBottom: 5,
+    color: '#22f',
   },
   image: {
     width: '100%',
@@ -18,6 +20,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   detail: {
+    borderColor: '#bbb',
+    borderWidth: 1,
   },
   title: {
     fontSize: 16,
@@ -69,6 +73,9 @@ class DealDetail extends Component {
     const { deal } = this.state;
     return (
       <View style={styles.deal}>
+        <TouchableOpacity onPress={this.props.onBack}>
+          <Text style={styles.backLink}>Back</Text>
+        </TouchableOpacity>
         <Image
           source={{ uri: deal.media[0] }}
           style={styles.image}
@@ -101,6 +108,7 @@ class DealDetail extends Component {
 
 DealDetail.propTypes = {
   initDealData: PropTypes.object.isRequired,
+  onBack: PropTypes.func.isRequired,
 };
 
 export default DealDetail;

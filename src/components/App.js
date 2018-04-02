@@ -32,15 +32,20 @@ class App extends Component {
       currentDealId: dealId,
     });
   }
+  unsetCurrentDeal = () => {
+    this.setState({
+      currentDealId: null,
+    });
+  }
 
   currentDeal = () => this.state.deals.find(deal => deal.key === this.state.currentDealId);
 
   render() {
     if (this.state.currentDealId) {
-      return <DealDetail initDealData={this.currentDeal()} />
+      return <DealDetail initDealData={this.currentDeal()} onBack={this.unsetCurrentDeal} />
     }
     if (this.state.deals.length > 0) {
-      return <DealList deals={this.state.deals} onItemPress={this.setCurrentDeal} />
+      return <DealList deals={this.state.deals} onItemPress={this.setCurrentDeal} />;
     }
     return (
       <View style={styles.container}>
