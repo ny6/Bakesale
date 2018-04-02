@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, View } from 'react-native';
+
+import DealItem from './DealItem';
 
 const styles = StyleSheet.create({
   list: {
@@ -14,7 +16,7 @@ const DealList = ({ deals }) => (
   <View style={styles.list}>
     <FlatList
       data={deals}
-      renderItem={({ item }) => <Text>{item.title}</Text>}
+      renderItem={({ item }) => <DealItem deal={item} />}
     />
   </View>
 );
