@@ -12,17 +12,18 @@ const styles = StyleSheet.create({
   },
 });
 
-const DealList = ({ deals }) => (
+const DealList = ({ deals, onItemPress }) => (
   <View style={styles.list}>
     <FlatList
       data={deals}
-      renderItem={({ item }) => <DealItem deal={item} />}
+      renderItem={({ item }) => <DealItem deal={item} onPress={onItemPress} />}
     />
   </View>
 );
 
 DealList.propTypes = {
   deals: PropTypes.array.isRequired,
+  onItemPress: PropTypes.func.isRequired,
 };
 
 export default DealList;
