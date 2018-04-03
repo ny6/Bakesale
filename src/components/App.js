@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import ajax from './ajax';
+import ajax from '../ajax';
 import DealList from './DealList';
 import DealDetail from './DealDetail';
 

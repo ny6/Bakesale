@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { priceDisplay } from '../utils';
-import ajax from './ajax';
+import ajax from '../ajax';
 
 const styles = StyleSheet.create({
   deal: {
