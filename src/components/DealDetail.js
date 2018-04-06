@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Animated, Dimensions, Image, PanResponder, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import { priceDisplay } from '../utils';
 import ajax from '../ajax';
@@ -65,11 +65,33 @@ const styles = StyleSheet.create({
 class DealDetail extends Component {
   state = {
     deal: this.props.initDealData,
+    imageIndex: 0,
   }
+
   async componentDidMount() {
     const fullDeal = await ajax.fetchDealDetail(this.state.deal.key);
     this.setState({ deal: fullDeal }); // eslint-disable-line
   }
+
+  imageXPos = new Animated.Value(0);
+
+  imagePanResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderMove: (evt, gs) => {
+      this.imageXPos.setValue(gs.dx);
+    },
+    onPanResponderRelease: (evt, gs) => {
+      const { width } = Dimensions.get('window');
+      if (Math.abs(gs.dx) > width * 0.4) {
+        const direction = Math.sign(gs.dx); // -1 for left, 1 for right
+        Animated.timing(this.imageXPos, {
+          toValue: direction * width,
+          duration: 250,
+        }).start();
+      }
+    },
+  });
+
   render() {
     const { deal } = this.state;
     return (
@@ -77,9 +99,10 @@ class DealDetail extends Component {
         <TouchableOpacity onPress={this.props.onBack}>
           <Text style={styles.backLink}>Back</Text>
         </TouchableOpacity>
-        <Image
-          source={{ uri: deal.media[0] }}
-          style={styles.image}
+        <Animated.Image
+          {...this.imagePanResponder.panHandlers}
+          source={{ uri: deal.media[this.state.imageIndex] }}
+          style={[styles.image, { left: this.imageXPos }]}
         />
         <View style={styles.detail}>
           <Text style={styles.title}>{deal.title}</Text>

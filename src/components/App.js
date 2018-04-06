@@ -53,7 +53,6 @@ class App extends Component {
     this.setState({ dealsFromSearch });
   }
 
-
   animateTitle = (direction = 1) => {
     const width = Dimensions.get('window').width - 150;
     Animated.timing(this.titleXPos, {
