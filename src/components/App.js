@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Animated, Dimensions, Easing, StyleSheet, Text, View } from 'react-native';
 
 import ajax from '../ajax';
 import DealList from './DealList';
@@ -22,12 +22,13 @@ const styles = StyleSheet.create({
 
 class App extends Component {
   state = {
+    currentDealId: null,
     deals: [],
     dealsFromSearch: [],
-    currentDealId: null,
   }
 
   async componentDidMount() {
+    this.animateTitle();
     const deals = await ajax.fetchInitialDeals();
     this.setState(() => ({ deals })); // eslint-disable-line
   }
@@ -52,7 +53,21 @@ class App extends Component {
     this.setState({ dealsFromSearch });
   }
 
+
+  animateTitle = (direction = 1) => {
+    const width = Dimensions.get('window').width - 150;
+    Animated.timing(this.titleXPos, {
+      toValue: direction * (width / 2),
+      duration: 1000,
+      easing: Easing.ease,
+    }).start(({ finished }) => {
+      if (finished) {
+        this.animateTitle(-1 * direction);
+      }
+    });
+  }
   currentDeal = () => this.state.deals.find(deal => deal.key === this.state.currentDealId);
+  titleXPos = new Animated.Value(0);
 
   render() {
     if (this.state.currentDealId) {
@@ -74,9 +89,9 @@ class App extends Component {
       );
     }
     return (
-      <View style={styles.container}>
+      <Animated.View style={[styles.container, { left: this.titleXPos }]}>
         <Text style={styles.header}>Bakesale</Text>
-      </View>
+      </Animated.View>
     );
   }
 }

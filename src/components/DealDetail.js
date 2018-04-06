@@ -7,12 +7,13 @@ import ajax from '../ajax';
 
 const styles = StyleSheet.create({
   deal: {
-    marginHorizontal: 12,
-    marginTop: 24,
+    // marginHorizontal: 12,
+    // marginTop: 24,
   },
   backLink: {
     marginBottom: 5,
     color: '#22f',
+    marginLeft: 10,
   },
   image: {
     width: '100%',
@@ -20,8 +21,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
   },
   detail: {
-    borderColor: '#bbb',
-    borderWidth: 1,
+    // borderColor: '#bbb',
+    // borderWidth: 1,
   },
   title: {
     fontSize: 16,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   price: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   avatar: {
     width: 60,
