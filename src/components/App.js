@@ -93,7 +93,7 @@ class App extends Component {
     }
     return (
       <Animated.View style={[styles.container, { left: this.titleXPos }]}>
-        <Text style={styles.header}>Bakesale</Text>
+        <Text style={styles.header} />
       </Animated.View>
     );
   }
