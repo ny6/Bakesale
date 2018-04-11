@@ -12,10 +12,15 @@ const styles = StyleSheet.create({
 
 class SearchBar extends Component {
   state = {
-    searchTerm: '',
+    searchTerm: this.props.initialSearchTerm,
   }
 
-  debouncedSearchDeals = debounce(this.props.searchDeals, 300);
+  searchDeals = (searchTerm) => {
+    this.props.searchDeals(searchTerm);
+    this.inputElement.blur();
+  }
+
+  debouncedSearchDeals = debounce(this.searchDeals, 300);
 
   handleChange = (searchTerm) => {
     this.setState({ searchTerm }, () => {
@@ -26,6 +31,8 @@ class SearchBar extends Component {
   render() {
     return (
       <TextInput
+        ref={(inputElement) => { this.inputElement = inputElement; }}
+        value={this.state.searchTerm}
         style={styles.input}
         placeholder="Search All Deals"
         onChangeText={this.handleChange}
@@ -36,6 +43,7 @@ class SearchBar extends Component {
 
 SearchBar.propTypes = {
   searchDeals: PropTypes.func.isRequired,
+  initialSearchTerm: PropTypes.string.isRequired,
 };
 
 export default SearchBar;
